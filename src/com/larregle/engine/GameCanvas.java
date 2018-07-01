@@ -29,7 +29,7 @@ public class GameCanvas extends Canvas {
 
     public class GameLoop implements Runnable {
 
-        private static final int FPS = 60;
+        private static final int FPS = 30;
         private GameCanvas gameCanvas;
 
         public GameLoop(GameCanvas gameCanvas) {
@@ -44,7 +44,7 @@ public class GameCanvas extends Canvas {
             long targetTime = 1_000 / FPS; // Time that should take per frame
 
             /* GAME LOOP */
-            while(gameCanvas.isRunning) {
+            while(gameCanvas.game.isRunning()) {
 
                 startTime = System.nanoTime();
                 update();
@@ -61,6 +61,7 @@ public class GameCanvas extends Canvas {
                 }
 
             }
+            render();
         }
 
         public void update() {
@@ -72,6 +73,9 @@ public class GameCanvas extends Canvas {
             graphics.setBackground(Color.BLACK);
             graphics.clearRect(0, 0, WIDTH, HEIGHT);
             gameCanvas.game.renderBoard(graphics);
+            if (!gameCanvas.game.isRunning()) {
+                gameCanvas.game.renderEndState(graphics);
+            }
             graphics.dispose();
             bufferStrategy.show();
         }
