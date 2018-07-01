@@ -5,8 +5,8 @@ import java.awt.image.BufferStrategy;
 
 public class GameCanvas extends Canvas {
 
-    public static final int WIDTH = 440;
-    public static final int HEIGHT = 440;
+    public static final int WIDTH = 650;
+    public static final int HEIGHT = 650;
 
     private final TicTacToeGame game;
     private BufferStrategy bufferStrategy;
@@ -47,6 +47,8 @@ public class GameCanvas extends Canvas {
             while(gameCanvas.isRunning) {
 
                 startTime = System.nanoTime();
+                update();
+                render();
                 URTimeMillis = (System.nanoTime() - startTime) / 1_000_000;
                 waitTime = targetTime - URTimeMillis; // Checking if took longer than expected
 
@@ -59,6 +61,19 @@ public class GameCanvas extends Canvas {
                 }
 
             }
+        }
+
+        public void update() {
+            gameCanvas.game.updateBoard();
+        }
+
+        public void render() {
+            Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
+            graphics.setBackground(Color.BLACK);
+            graphics.clearRect(0, 0, WIDTH, HEIGHT);
+            gameCanvas.game.renderBoard(graphics);
+            graphics.dispose();
+            bufferStrategy.show();
         }
     }
 }
