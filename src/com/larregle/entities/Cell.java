@@ -7,12 +7,16 @@ public class Cell {
 
     private int x;
     private int y;
+    private int screenX;
+    private int screenY;
     private int minimaxValue;
     private CellState cellState;
 
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
+        this.screenX = -1;
+        this.screenY = -1;
         this.cellState = CellState.EMPTY;
     }
 
@@ -32,6 +36,22 @@ public class Cell {
         this.y = y;
     }
 
+    public int getScreenX() {
+        return screenX;
+    }
+
+    public void setScreenX(int screenX) {
+        this.screenX = screenX;
+    }
+
+    public int getScreenY() {
+        return screenY;
+    }
+
+    public void setScreenY(int screenY) {
+        this.screenY = screenY;
+    }
+
     public int getMinimaxValue() {
         return minimaxValue;
     }
@@ -45,7 +65,9 @@ public class Cell {
     }
 
     public void setCellState(CellState cellState) {
-        this.cellState = cellState;
+        if (this.cellState.equals(CellState.EMPTY)) {
+            this.cellState = cellState;
+        }
     }
 
     public enum CellState {
