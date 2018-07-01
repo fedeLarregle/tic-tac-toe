@@ -2,6 +2,7 @@ package com.larregle.engine;
 
 import com.larregle.entities.Board;
 import com.larregle.entities.Cell;
+import com.larregle.entities.Player;
 
 import java.awt.*;
 
@@ -26,7 +27,11 @@ public class TicTacToeGame {
         graphics.fillRect(0, 0, 650, 650);
         for (Cell cell : board.getWinningCells()) {
             graphics.setStroke(new BasicStroke(5));
-            graphics.setColor(Color.GREEN);
+            if (board.getWinner().equals(Player.Type.COMPUTER)) {
+                graphics.setColor(Color.RED);
+            } else {
+                graphics.setColor(Color.GREEN);
+            }
             graphics.drawRect(cell.getScreenX(), cell.getScreenY(), Cell.WIDTH, Cell.HEIGHT);
         }
     }

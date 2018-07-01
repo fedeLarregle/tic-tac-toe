@@ -29,7 +29,7 @@ public class GameCanvas extends Canvas {
 
     public class GameLoop implements Runnable {
 
-        private static final int FPS = 30;
+        private static final int FPS = 60;
         private GameCanvas gameCanvas;
 
         public GameLoop(GameCanvas gameCanvas) {
