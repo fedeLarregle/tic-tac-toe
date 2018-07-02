@@ -16,6 +16,8 @@ public class GameCanvas extends Canvas {
         this.game = game;
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         addMouseListener(MouseHandler.getInstance());
+        addKeyListener(KeyHandler.getInstance());
+        this.requestFocus();
     }
 
     public void start() {
@@ -42,10 +44,8 @@ public class GameCanvas extends Canvas {
             long waitTime;
             long URTimeMillis;
             long targetTime = 1_000 / FPS; // Time that should take per frame
-
             /* GAME LOOP */
-            while(gameCanvas.game.isRunning()) {
-
+            while(!gameCanvas.game.hasQuit()) {
                 startTime = System.nanoTime();
                 update();
                 render();
@@ -61,21 +61,17 @@ public class GameCanvas extends Canvas {
                 }
 
             }
-            render();
         }
 
         public void update() {
-            gameCanvas.game.updateBoard();
+            gameCanvas.game.update();
         }
 
         public void render() {
             Graphics2D graphics = (Graphics2D) bufferStrategy.getDrawGraphics();
             graphics.setBackground(Color.BLACK);
             graphics.clearRect(0, 0, WIDTH, HEIGHT);
-            gameCanvas.game.renderBoard(graphics);
-            if (!gameCanvas.game.isRunning()) {
-                gameCanvas.game.renderEndState(graphics);
-            }
+            gameCanvas.game.render(graphics);
             graphics.dispose();
             bufferStrategy.show();
         }
