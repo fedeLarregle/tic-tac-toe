@@ -23,6 +23,8 @@ public class Menu {
         if (KeyHandler.getInstance().wasKeyTyped(KeyHandler.ENTER)) {
             if (currentOption == 0) {
                 game.setGameState(TicTacToeGame.GameState.GAME_RUNNING);
+            } else if (currentOption == 1) {
+                System.exit(0);
             }
         } else if (KeyHandler.getInstance().wasKeyTyped(KeyHandler.DOWN)) {
             if (currentOption == 1) {
