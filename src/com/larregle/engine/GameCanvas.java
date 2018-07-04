@@ -45,7 +45,7 @@ public class GameCanvas extends Canvas {
             long URTimeMillis;
             long targetTime = 1_000 / FPS; // Time that should take per frame
             /* GAME LOOP */
-            while(!gameCanvas.game.hasQuit()) {
+            for(;;) {
                 startTime = System.nanoTime();
                 update();
                 render();

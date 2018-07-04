@@ -2,7 +2,6 @@ package com.larregle.states;
 
 import com.larregle.engine.KeyHandler;
 import com.larregle.engine.TicTacToeGame;
-import com.larregle.entities.Board;
 
 import java.awt.Color;
 import java.awt.Font;
