@@ -8,11 +8,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class Board {
 
     private final Cell[][] cells;
     private final List<Cell> winningCells;
     private final List<Cell> rootValues;
+    private final Rectangle boundingBox;
     private Player.Type currentPlayer;
     private Player.Type winner;
 
@@ -21,9 +23,31 @@ public class Board {
         this.winningCells = new ArrayList<>(3);
         this.rootValues = new ArrayList<>();
         this.currentPlayer = Player.Type.USER;
+
+        initCells();
+
+        this.boundingBox = new Rectangle(
+                cells[0][0].getScreenX(),
+                cells[0][0].getScreenY(),
+                (Cell.WIDTH * 3),
+                (Cell.HEIGHT * 3)
+        );
+    }
+
+    private void initCells() {
         for (int i = 0; i < cells.length; i++)
-            for (int j = 0; j < cells[i].length; j++)
-                cells[i][j] = new Cell(i, j);
+            for (int j = 0; j < cells[i].length; j++) {
+                int x = (i + (Cell.WIDTH * i)) + 100;
+                int y = (j + (Cell.HEIGHT * j)) + 100;
+                Cell cell = new Cell(i, j);
+
+                if (cell.getScreenX() < 0) {
+                    cell.setScreenX(x);
+                    cell.setScreenY(y);
+                }
+
+                cells[i][j] = cell;
+            }
     }
 
     public boolean isRunning() {
@@ -84,22 +108,22 @@ public class Board {
         if (!isRunning()) { return; }
         // Dummy logic to update the cell state
         if (MouseHandler.getInstance().isClickedPerformed()) {
+            Point pointClicked = MouseHandler.getInstance().getPointClicked();
+            System.out.println(pointClicked);
+            if (!boundingBox.contains(pointClicked)) { MouseHandler.getInstance().setClickedPerformed(false); return; }
             outer:
             for (int i = 0; i < cells.length; i++) {
                 for (int j = 0; j < cells[i].length; j++) {
-                    Point pointClicked = MouseHandler.getInstance().getPointClicked();
-                    if (pointClicked != null) {
-                        if (new Rectangle(cells[i][j].getScreenX(), cells[i][j].getScreenY(), Cell.WIDTH, Cell.HEIGHT)
-                                .contains(pointClicked)) {
+                    if (new Rectangle(cells[i][j].getScreenX(), cells[i][j].getScreenY(), Cell.WIDTH, Cell.HEIGHT)
+                            .contains(pointClicked)) {
 
-                            if (!cells[i][j].getCellState().equals(Cell.CellState.EMPTY))
-                                break outer;
-
-                            cells[i][j].setCellState(Cell.CellState.USER);
-                            currentPlayer = Player.Type.COMPUTER;
-                            MouseHandler.getInstance().setClickedPerformed(false);
+                        if (!cells[i][j].getCellState().equals(Cell.CellState.EMPTY))
                             break outer;
-                        }
+
+                        cells[i][j].setCellState(Cell.CellState.USER);
+                        currentPlayer = Player.Type.COMPUTER;
+                        MouseHandler.getInstance().setClickedPerformed(false);
+                        break outer;
                     }
                 }
             }

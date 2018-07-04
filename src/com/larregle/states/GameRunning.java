@@ -35,16 +35,10 @@ public class GameRunning {
 
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
-                int x = (i + (Cell.WIDTH * i)) + 100;
-                int y = (j + (Cell.HEIGHT * j)) + 100;
                 graphics.setColor(Color.WHITE);
                 graphics.setStroke(new BasicStroke(3.0F));
                 drawLines(graphics);
-                drawCellState(graphics, x, y, cells[i][j].getCellState());
-                if (cells[i][j].getScreenX() < 0) {
-                    cells[i][j].setScreenX(x);
-                    cells[i][j].setScreenY(y);
-                }
+                drawCellState(graphics, cells[i][j].getScreenX(), cells[i][j].getScreenY(), cells[i][j].getCellState());
             }
         }
 
