@@ -12,6 +12,8 @@ Behind the scenes it uses the minimax algorithm to choose the best move being th
 ```
 A few screen shots of the gameplay:
 
-![2018-07-01 1](https://user-images.githubusercontent.com/16426370/42137937-6c01b4e4-7d4b-11e8-8a87-9ee55930d61c.png)
+![2018-07-04 2](https://user-images.githubusercontent.com/16426370/42255591-db88e156-7f22-11e8-88e8-351352a02765.png)
 
-![2018-07-01 2](https://user-images.githubusercontent.com/16426370/42137941-73ebeada-7d4b-11e8-8470-493cb9b9b753.png)
+![2018-07-04](https://user-images.githubusercontent.com/16426370/42255605-e6967ba8-7f22-11e8-90c6-3bd80391d5f5.png)
+
+![2018-07-04 1](https://user-images.githubusercontent.com/16426370/42255614-ef91ddec-7f22-11e8-8ac7-e7b90f313b72.png)
