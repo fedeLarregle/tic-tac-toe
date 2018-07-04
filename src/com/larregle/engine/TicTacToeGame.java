@@ -22,6 +22,7 @@ public class TicTacToeGame {
     }
 
     public void resetState() {
+        MouseHandler.getInstance().setClickedPerformed(false);
         board = new Board();
         gameMenu = new Menu(this);
         gameState = GameState.GAME_MENU;
