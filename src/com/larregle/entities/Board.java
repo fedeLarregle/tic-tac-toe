@@ -4,11 +4,6 @@ import com.larregle.engine.MouseHandler;
 
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Graphics2D;
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.RenderingHints;
-import java.awt.Font;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,13 +32,6 @@ public class Board {
         if (isWinning(Player.Type.COMPUTER)) { winner = Player.Type.COMPUTER; return false; }
         if (getEmptyCells().isEmpty()) { winner = null; return false; }
         return true;
-    }
-
-    public void update() {
-        playerMove();
-        if (currentPlayer.equals(Player.Type.COMPUTER)) {
-            computerMove();
-        }
     }
 
     public boolean isWinning(Player.Type player) {
@@ -165,40 +153,6 @@ public class Board {
         return scores.stream().min(Integer::compareTo).get();
     }
 
-    public void render(Graphics2D graphics) {
-        // Just a little title
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.setFont(new Font(null, 0, 50));
-        graphics.drawString("TIC TAC TOE",155,50);
-        // Drawing all the cells
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                int x = (i + (Cell.WIDTH * i)) + 100;
-                int y = (j + (Cell.HEIGHT * j)) + 100;
-                graphics.setColor(Color.WHITE);
-                graphics.setStroke(new BasicStroke(3.0F));
-                graphics.drawRect((i + (Cell.WIDTH * i)) + 100, (j + (Cell.HEIGHT * j)) + 100, Cell.WIDTH, Cell.HEIGHT);
-                drawCellState(graphics, x, y, cells[i][j].getCellState());
-                if (cells[i][j].getScreenX() < 0) {
-                    cells[i][j].setScreenX(x);
-                    cells[i][j].setScreenY(y);
-                }
-            }
-        }
-    }
-
-    public void drawCellState(Graphics2D graphics, int x, int y, Cell.CellState state) {
-        graphics.setFont(new Font(null, 0, 100));
-        if (state.equals(Cell.CellState.EMPTY)) {
-            graphics.drawString("", x + Cell.WIDTH / 4, y + (Cell.WIDTH / 2 + Cell.WIDTH / 4));
-        } else if (state.equals(Cell.CellState.USER)) {
-            graphics.drawString("X", x + Cell.WIDTH / 4, y + (Cell.WIDTH / 2 + Cell.WIDTH / 4));
-        } else if (state.equals(Cell.CellState.COMPUTER)) {
-            graphics.drawString("O", x + Cell.WIDTH / 4, y + (Cell.WIDTH / 2 + Cell.WIDTH / 4));
-        }
-    }
-
     public List<Cell> getEmptyCells() {
         List<Cell> result = new ArrayList<>();
 
@@ -210,7 +164,11 @@ public class Board {
         return result;
     }
 
+    public Cell[][] getCells() { return this.cells; }
+
     public Player.Type getWinner() { return winner; }
 
     public List<Cell> getWinningCells() { return winningCells; }
+
+    public Player.Type getCurrentPlayer() { return currentPlayer; }
 }
