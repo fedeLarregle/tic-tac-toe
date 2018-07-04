@@ -109,7 +109,6 @@ public class Board {
         // Dummy logic to update the cell state
         if (MouseHandler.getInstance().isClickedPerformed()) {
             Point pointClicked = MouseHandler.getInstance().getPointClicked();
-            System.out.println(pointClicked);
             if (!boundingBox.contains(pointClicked)) { MouseHandler.getInstance().setClickedPerformed(false); return; }
             outer:
             for (int i = 0; i < cells.length; i++) {
